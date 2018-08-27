@@ -1,34 +1,27 @@
-input_char = str(input())
-order_num = int(input())
+from sys import stdin
+from collections import deque
 
-left_stack = [char for char in input_char]
-right_stack = []
+input_char = str(stdin.readline().split())
+order_num = int(stdin.readline().split())
 
-def processor(order_char, *args):
+left_stack = deque(input_char)
+right_stack = deque([])
+
+def processor(order_char, *args)
     if order_char == "L":
-        try:
-            right_stack.append(left_stack[-1])
-            left_stack.pop(-1)
-        except:
-            pass
+        if left_stack:
+            right_stack.appendleft(left_stack.pop()])
     elif order_char == "D":
-        try:
-            left_stack.append(right_stack[-1])
-            right_stack.pop(-1)
-        except:
-            pass
+        if right_stack:
+            left_stack.append(right_stack.popleft())
     elif order_char == "B":
-        try:
-            left_stack.pop(-1)
-        except:
-            pass
+        if left_stack:
+            left_stack.pop()
     elif order_char == "P":
         left_stack.append(args[0])
-    else:
-        assert ValueError
         
 for i in range(order_num):
-    order_input = str(input()).split()
+    order_input = str(stdin.readline().strip()).split()
 
     if len(order_input) == 2:
         order_char_, letter_ = order_input
@@ -36,5 +29,6 @@ for i in range(order_num):
     else:
         order_char_ = order_input[0]
         processor(order_char_)
-        
-''.join(left_stack+right_stack[::-1])
+
+left_stack.extend(right_stack)
+print(''.join(left_stack))
