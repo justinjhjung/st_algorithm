@@ -6,22 +6,22 @@ right_stack = []
 
 def processor(order_char, *args):
     if order_char == "L":
-        try:
+        if not left_stack:
+            pass
+        else:
             right_stack.append(left_stack[-1])
             left_stack.pop(-1)
-        except:
-            pass
     elif order_char == "D":
-        try:
+        if not right_stack:
+            pass
+        else:
             left_stack.append(right_stack[-1])
             right_stack.pop(-1)
-        except:
-            pass
     elif order_char == "B":
-        try:
-            left_stack.pop(-1)
-        except:
+        if not left_stack:
             pass
+        else:
+            left_stack.pop(-1)
     elif order_char == "P":
         left_stack.append(args[0])
     else:
