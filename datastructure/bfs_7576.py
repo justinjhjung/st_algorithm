@@ -28,6 +28,7 @@ def bfs(tomato, que, maze):
     dx = [0,0,1,-1]
     dy = [1,-1,0,0]
 
+    res = 0
     while que:
         if tomato < 1:
             break
@@ -43,14 +44,8 @@ def bfs(tomato, que, maze):
                 if maze[nx][ny] < 0 or d[nx][ny] != INF:
                     continue
                 d[nx][ny] = d[P[0]][P[1]] + 1
+                res = max(res, d[nx][ny])
                 que.append((nx, ny))
-
-    res = 0
-    for line in d:
-        for element in line:
-            if element != INF:
-                if res < element:
-                    res = element
 
     if tomato != 0:
         print("-1")
