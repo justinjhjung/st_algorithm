@@ -3,36 +3,49 @@ from sys import stdin
 def input():
     return stdin.readline().strip()
 
-def dfs(s, c):
-    color[s] = c
+def dfs(stack, start):
+    if len(stack) == 0:
+        stack.append(start)
+        color[start] = 1
+    while stack:
+        vertex = stack.pop()
+        if visited[vertex]:
+           continue
+        visited[vertex] = True
+        adjvertex = [i for i in adj_list[vertex] if not visited[i]]
 
-    for i in range(len(adj_list[s])):
-        if color[i] == c:
-            return False
-        elif color[i] == 0 and not dfs(adj_list[s][i],-c):
-            return False
+        stack.extend(adjvertex)
 
+        for i in adjvertex:
+            if color[i] != 0:
+                if (color[vertex] == color[i]):
+                    return False
+            else:
+                color[i] = -color[vertex]
 
-# def solve(n, m, adj_list):
-#     for i in range(n):
-#         if color[i] == 0:
-#             if not dfs(i, 1):
-#                 print("Impossible")
-#     if i ==
-#     print("Possible")
+    return True
 
-
+def solve(visited):
+    stack = []
+    for i in range(1,n+1):
+        if visited == [True] * (n+1):
+            print("possible")
+            return
+        if visited[i]:
+            continue
+        if not dfs(stack, i):
+            print("impossible")
+            return
 
 test_num = int(input())
 for i in range(test_num):
     n, m = (int(x) for x in input().split())
     adj_list = [[] for i in range(n+1)]
     color = [0 for i in range(n+1)]
-    color[0] = 1 # 초기 조건
-
     for j in range(m):
         u, v = (int(x) for x in input().split())
         adj_list[u].append(v)
         adj_list[v].append(u)
 
-    print(dfs(1,1))
+    visited = [True] + [False] * n
+    solve(visited)
